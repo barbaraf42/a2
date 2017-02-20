@@ -15,7 +15,7 @@ body {
 
 .intro {
     text-align: center;
-    margin-top: 15%;
+    margin-top: 10%;
     clear: both;
 }
 
@@ -45,4 +45,13 @@ body {
 .submit-button {
     text-align: center;
     margin-top: 5%;
+}
+
+.alert {
+    width: 50%;
+    margin-top: 5%;
+    font-weight: bold;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }

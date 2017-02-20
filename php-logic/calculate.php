@@ -1,15 +1,42 @@
 <?php
 
-$quotes = [
-    ["Coming back to where you started is not the same as never leaving.", "Terry Pratchett"],
-    ["It is well known that a vital ingredient of success is not knowing that what you're attempting can't be done.", "Terry Pratchett"],
-    ["It’s still magic even if you know how it’s done.", "Terry Pratchett"],
-    ["So much universe, and so little time.", "Terry Pratchett"],
-    ["I love deadlines. I like the whooshing sound they make as they fly by.", "Douglas Adams"],
-    ["Flying is learning how to throw yourself at the ground and miss.", "Douglas Adams"]
-];
+require("Tools.php");
+require("Form.php");
 
-$randomNum = rand(0,5);
+$form = new DWA\Form($_GET);
+$tools = new DWA\Tools;
+$errors = [];
+$result = 0;
 
-$quote = $quotes[$randomNum][0];
-$source = $quotes[$randomNum][1];
+if ($form->isSubmitted()) {
+
+    // get the form values
+    $billAmount = $form->get('billAmount', $default = 0); # String -> Float
+    $numberOfPeople = $form->get('numberOfPeople', $default = '1'); # String -> Integer
+    $includeTip = $form->isChosen('includeTip'); # Boolean
+    $tipPercentInForm = $form->get('tipPercent', $default = '15'); # String -> Integer
+    $tipPercentToCalculate = ($includeTip) ? $tipPercentInForm : '0'; # String
+    $roundUp = $form->isChosen('roundUp'); # Boolean
+
+    // validate these form items
+    $errors = $form->validate(
+        [
+            'billAmount' => 'required|numeric',
+        ]
+    );
+
+    // calculate per person bill if there are no errors
+    if(!$errors) {
+
+        $totalBill = floatval($billAmount) + (floatval($billAmount) * (intval($tipPercentToCalculate) / 100));
+        $onePersonBill = $totalBill / intval($numberOfPeople);
+        $onePersonBill = round($onePersonBill, 2);
+        if ($roundUp) {
+            $onePersonBill = round($onePersonBill, 0, PHP_ROUND_HALF_UP);
+        }
+        $result = $onePersonBill;
+    }
+
+    $tools->dump($form);
+
+}
