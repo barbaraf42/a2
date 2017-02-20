@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Splitting the Bill</title>
+    <title>Split the Bill</title>
 
     <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
@@ -26,7 +26,7 @@
 <body>
 
     <section class="intro">
-        <h1>Splitting the Bill</h1>
+        <h1>Split the Bill</h1>
         <p>
             Congratulations, you're splitting the bill!
             <br />
@@ -40,12 +40,12 @@
 
             <div class="form-item">
                 <label>How much is the bill?</label>
-                <input type="text" class="bill-amount" required />
+                <input type="text" name="billAmount" class="bill-amount" required />
             </div>
 
             <div class="form-item">
-                <label>How many people are splitting the bill?</label>
-                <select>
+                <label>How many people are paying?</label>
+                <select name="numberOfPeople">
                     <?php for ($i=1; $i<=50; $i++): ?>
                         <option>
                             <?=$i?>
@@ -65,11 +65,18 @@
                 <label>
                     OK, how much tip?
                 </label>
-                <select>
+                <select name="tipPercent">
                     <option>15%</option>
                     <option>18%</option>
                     <option>20%</option>
                 </select>
+            </div>
+
+            <div class="form-item">
+                <label>
+                    Round up?
+                </label>
+                <input type="checkbox" name="roundUp" />
             </div>
 
             <div class="form-item submit-button">
