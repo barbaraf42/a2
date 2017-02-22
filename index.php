@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <meta charset="utf-8">
@@ -23,6 +24,7 @@
     <script src="js/document.js"></script>
 
 </head>
+
 <body>
 
     <section class="intro">
@@ -56,7 +58,7 @@
                 <label for="billAmount" class="label-required">How much is the bill?<br /><span class="required not-bold">(required)</span></label>
                 $
                 <input type="text" name="billAmount" id="billAmount" class="bill-amount" required value="<?=$form->prefill('billAmount')?>"/>
-                <input type="hidden" name="billAmount-errorLabel" value="bill amount" />
+                <input type="hidden" name="billAmountErrorLabel" value="bill amount" />
             </div>
 
             <div class="form-item">
@@ -105,4 +107,5 @@
     </section>
 
 </body>
+
 </html>

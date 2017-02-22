@@ -164,7 +164,7 @@ class Form {
             'alphaNumeric' => ' can only contain letters or numbers.',
             'alpha' => ' can only contain letters.',
             'numeric' => ' can only contain numbers.',
-            'numericValues' => ' can only contain numeric values and decimal points.',
+            'numericDecimals' => ' can only contain numbers and decimal points.',
             'required' => ' is required.',
             'email' => ' is not a valid email address.',
             'min' => ' has to be greater than '.$parameter.'.',
@@ -206,9 +206,9 @@ class Form {
 
 
     /**
-    * Returns boolean if given value contains only numeric values (including integers, flaots, exponential, hexidecimal)
+    * Returns boolean if given value contains only numbers and decimal points
     */
-    private function numericValues($value) {
+    private function numericDecimals($value) {
         return is_numeric(str_replace(' ','', $value));
     }
 
