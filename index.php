@@ -29,8 +29,6 @@
         <h1>Split the Bill</h1>
         <p>
             Congratulations, you're splitting the bill!
-            <br />
-            How much will everyone pay?
         </p>
     </section>
 
@@ -38,7 +36,7 @@
 
         <?php if ($errors): ?>
             <div class="alert alert-danger" role="alert">
-                Please answer the questions correctly!
+                Please check what you entered!
             	<?php foreach($errors as $error): ?>
 					<br />
                     <?=$error?>
@@ -46,19 +44,26 @@
 		    </div>
         <?php endif; ?>
 
+        <?php if ( ($form->isSubmitted()) && (!$form->hasErrors) ): ?>
+            <div class="alert alert-success" role="alert">
+                Everybody's paying $<?=$result?>!
+            </div>
+        <?php endif; ?>
+
         <form method="get" action="index.php">
 
             <div class="form-item">
-                <label>How much is the bill?</label>
+                <label for="billAmount" class="label-required">How much is the bill?<br /><span class="required not-bold">(required)</span></label>
                 $
-                <input type="text" name="billAmount" class="bill-amount" required value="<?=$form->prefill('billAmount')?>"/>
+                <input type="text" name="billAmount" id="billAmount" class="bill-amount" required value="<?=$form->prefill('billAmount')?>"/>
+                <input type="hidden" name="billAmount-errorLabel" value="bill amount" />
             </div>
 
             <div class="form-item">
-                <label>How many people are paying?</label>
-                <select name="numberOfPeople">
+                <label for="numberOfPeople">How many people are paying?</label>
+                <select name="numberOfPeople" id="numberOfPeople">
                     <?php for ($i=1; $i<=50; $i++): ?>
-                        <option value="<?=$i?>">
+                        <option value="<?=$i?>" <?php if($form->get('numberOfPeople')==$i) echo "selected" ?>>
                             <?=$i?>
                         </option>
                     <?php endfor; ?>
@@ -66,42 +71,36 @@
             </div>
 
             <div class="form-item">
-                <label>
+                <label for="includeTip">
                     Include tip?
                 </label>
-                <input type="checkbox" name="includeTip" class="js-includeTip" <?php if($form->isChosen('includeTip')) echo 'CHECKED' ?> />
+                <input type="checkbox" name="includeTip" id="includeTip" class="js-includeTip" <?php if($form->isChosen('includeTip')) echo 'CHECKED' ?> />
             </div>
 
             <div class="form-item js-tipPercent <?php if(!($form->isChosen('includeTip'))) echo 'hidden' ?>">
-                <label>
+                <label for="tipPercent">
                     OK, how much tip?
                 </label>
-                <select name="tipPercent">
-                    <option value="15">15</option>
-                    <option value="18">18</option>
-                    <option value="20">20</option>
+                <select name="tipPercent" id="tipPercent">
+                    <option value="15" <?php if($form->get('tipPercent')=="15") echo "selected" ?>>15</option>
+                    <option value="18" <?php if($form->get('tipPercent')=="18") echo "selected" ?>>18</option>
+                    <option value="20" <?php if($form->get('tipPercent')=="20") echo "selected" ?>>20</option>
                 </select>
                 %
             </div>
 
             <div class="form-item">
-                <label>
+                <label for="roundUp">
                     Round up?
                 </label>
-                <input type="checkbox" name="roundUp" <?php if($form->isChosen('includeTip')) echo 'CHECKED' ?> />
+                <input type="checkbox" name="roundUp" id="roundUp" <?php if($form->isChosen('roundUp')) echo 'CHECKED' ?> />
             </div>
 
             <div class="form-item submit-button">
-                <button class="btn btn-primary">Submit</button>
+                <button class="btn btn-primary">Split the Bill!</button>
             </div>
 
         </form>
-
-        <?php if (!$form->hasErrors): ?>
-            <div class="alert alert-success" role="alert">
-                Everybody's paying $<?=$result?>!
-            </div>
-        <?php endif; ?>
 
     </section>
 

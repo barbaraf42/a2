@@ -137,7 +137,7 @@ class Form {
 
                 # Test failed
                 if(!$test) {
-                    $errors[] = 'The field '.$fieldName.$this->getErrorMessage($rule, $parameter);
+                    $errors[] = 'The '.$fieldName.$this->getErrorMessage($rule, $parameter);
 
                     # Only indicate one error per field
                     break;
@@ -162,12 +162,13 @@ class Form {
 
         $language = [
             'alphaNumeric' => ' can only contain letters or numbers.',
-            'alpha' => ' can only contain letters',
-            'numeric' => ' can only contain numbers',
+            'alpha' => ' can only contain letters.',
+            'numeric' => ' can only contain numbers.',
+            'numericValues' => ' can only contain numeric values and decimal points.',
             'required' => ' is required.',
             'email' => ' is not a valid email address.',
-            'min' => ' has to be greater than '.$parameter,
-            'max' => ' has to be less than '.$parameter,
+            'min' => ' has to be greater than '.$parameter.'.',
+            'max' => ' has to be less than '.$parameter.'.',
         ];
 
         # If a message for the rule was found, use that, otherwise default to " has an error"
@@ -201,6 +202,14 @@ class Form {
 	*/
     private function numeric($value) {
         return ctype_digit(str_replace(' ','', $value));
+    }
+
+
+    /**
+    * Returns boolean if given value contains only numeric values (including integers, flaots, exponential, hexidecimal)
+    */
+    private function numericValues($value) {
+        return is_numeric(str_replace(' ','', $value));
     }
 
 

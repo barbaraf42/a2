@@ -21,9 +21,26 @@ if ($form->isSubmitted()) {
     // validate these form items
     $errors = $form->validate(
         [
-            'billAmount' => 'required|numeric',
+            'billAmount' => 'required|numericValues',
         ]
     );
+
+    // assign clearer field labels for error messages
+    $fieldNameLabels = [
+        'billAmount' => 'billAmount-errorLabel',
+    ];
+
+    // if there are errors, use clearer field labels
+    if ($errors) {
+        $newErrors = [];
+        foreach($errors as $errorMessage) {
+            foreach($fieldNameLabels as $fieldName => $fieldNameLabel) {
+                $newFieldNameLabel = $form->sanitize($fieldNameLabel);
+                $newErrors[] = str_replace($fieldName, $form->get($newFieldNameLabel), $errorMessage);
+            }
+        }
+        $errors = $newErrors;
+    }
 
     // calculate per person bill if there are no errors
     if(!$errors) {
@@ -31,12 +48,11 @@ if ($form->isSubmitted()) {
         $totalBill = floatval($billAmount) + (floatval($billAmount) * (intval($tipPercentToCalculate) / 100));
         $onePersonBill = $totalBill / intval($numberOfPeople);
         $onePersonBill = round($onePersonBill, 2);
+        $onePersonBill = number_format($onePersonBill, 2, '.', '');
         if ($roundUp) {
-            $onePersonBill = round($onePersonBill, 0, PHP_ROUND_HALF_UP);
+            $onePersonBill = ceil($onePersonBill);
         }
         $result = $onePersonBill;
     }
-
-    $tools->dump($form);
 
 }
