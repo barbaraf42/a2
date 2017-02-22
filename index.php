@@ -34,7 +34,7 @@
         </p>
     </section>
 
-    <section class="calculator">
+    <div class="calculator">
 
         <?php if ($errors): ?>
             <div class="alert alert-danger" role="alert">
@@ -104,7 +104,7 @@
 
         </form>
 
-    </section>
+    </div>
 
 </body>
 
