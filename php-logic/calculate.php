@@ -1,10 +1,8 @@
 <?php
 
-require("Tools.php");
 require("Form.php");
 
 $form = new DWA\Form($_GET);
-$tools = new DWA\Tools;
 $errors = [];
 $result = 0;
 
